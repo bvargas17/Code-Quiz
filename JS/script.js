@@ -1,7 +1,19 @@
 // variables
+let timer = document.querySelector("#timer");
 let quizCover = document.querySelector("#quizCover");
 let startButton = document.querySelector("#startButton");
-let timer = document.querySelector("#timer")
+let questionOne = document.querySelector("#questionOne");
+let questionTwo = document.querySelector("#questionTwo");
+let questionThree = document.querySelector("#questionThree");
+let questionFour = document.querySelector("#questionFour");
+let questionFive = document.querySelector("#questionFive");
+let finalScreen = document.querySelector("#finalScreen");
+let score = document.querySelector("#score");
+let goBack = document.querySelector("#goBack");
+let submitButton = document.querySelector("#submitButton");
+let nameInput = document.querySelector("#nameInput");
+let highscoreNames = document.querySelector("#highscoreNames");
+
 let buttonA = document.querySelector("#buttonA");
 let buttonB = document.querySelector("#buttonB");
 let buttonC = document.querySelector("#buttonC");
@@ -27,12 +39,11 @@ let buttonB4 = document.querySelector("#buttonB4");
 let buttonC4 = document.querySelector("#buttonC4");
 let buttonD4 = document.querySelector("#buttonD4");
 
-let questionOne = document.querySelector("#questionOne");
-let questionTwo = document.querySelector("#questionTwo");
-let questionThree = document.querySelector("#questionThree");
-let questionFour = document.querySelector("#questionFour");
-let questionFive = document.querySelector("#questionFive");
-let intialTime = 90;
+let intialTime = 5;
+let secondsDisplay;
+let finalscore = "";
+let highscores = [];
+
 
 //hide the questions
 document.addEventListener("DOMContentLoaded", function(){
@@ -41,21 +52,44 @@ questionTwo.style.display = "none";
 questionThree.style.display = "none";
 questionFour.style.display = "none";
 questionFive.style.display = "none";
+finalScreen.style.display = "none";
 
 });
 
 // Start the quiz
 startButton.addEventListener("click", function (){
         quizCover.style.display = "none";
-        timer.append("Timer: ", intialTime);
         questionOne.style.display = "unset";
         one();
         two();
         three();
         four();
         five(); 
+        final();
+        
+        secondsDisplay = setInterval(startTimer, 1000);
+        
+        timer.textContent = intialTime;
+        
+        endTime();
+        
+
+
     });
 
+    function startTimer () {
+        intialTime--;
+        timer.textContent = intialTime;
+
+        if (intialTime <= 0){
+            endTime();
+            final();
+        }
+    }
+
+    function endTime () {
+        clearInterval(intialTime);
+    }
 
 
 //questions
@@ -131,7 +165,8 @@ startButton.addEventListener("click", function (){
         buttonA4.addEventListener("click", function(){
             alert("correct");
             questionFive.style.display = "none";
-            //questionTwo.style.display = "unset";
+            finalScreen.style.display = "unset";
+            finalscore = intialTime; 
         });
         buttonD4.addEventListener("click", function(){
             alert("wrong");
@@ -144,5 +179,16 @@ startButton.addEventListener("click", function (){
         });
     }
 
-// will make the cover disapear 
-//document.getElementById("quizCover").style.display = "none";
+    function final(){
+        submitButton.addEventListener("click", function(){
+            score.append("your final score is: " + finalscore);
+            let x = nameInput.value;
+            console.log(x);
+            
+        });
+    }
+
+
+// highscores.push(newScore);
+// window.localStorage.setItem("highscore", JSON.stringify(highscores));
+// window.location.href=" ";
